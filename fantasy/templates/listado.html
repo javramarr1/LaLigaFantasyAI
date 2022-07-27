@@ -1,0 +1,114 @@
+{% include "navbar.html" %}
+{% block extrahead %}
+
+    <meta charset="utf-8">
+   
+    <title>Jugadores - MiFantasy</title>
+    
+{% endblock %}
+
+{% block content %}
+
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4">Listado de jugadores</h3>
+                    <div class="card shadow">
+                        <div class="card-header py-3" style="height: 61px;">
+                            <div class="row">
+                                <div class="col-7 col-sm-5 col-md-3 col-lg-3">
+                                    <p class="text-primary m-0 fw-bold">Información general</p>
+                                </div>
+                                <div class="col-5 col-sm-4 col-md-3 col-lg-3 offset-sm-3 offset-md-6 offset-lg-6">
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Busca un jugador"></label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="margin-top: -20px;">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                <table class="table my-0" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Nombre</th>
+                                            <th>Puntos</th>
+                                            <th>Posición</th>
+                                            <th>Equipo</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for j in page_obj%}
+                                        <tr>
+                                            <td style="text-align:center;"><img class="rounded-circle me-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg"></td>
+                                            <td><a class="nav-link" href="{% url 'perfilJugador' jugador_id=j.id%}"><span>{{j.nombre}}</span></a></td>
+                                            <td>{{j.getPuntosTotales}}</td>
+                                            <td>{{j.posicion}}</td>
+                                            <td>{{j.equipo}}</td>
+                                            <td>{{j.getValorDisplay}}</td>
+                                            <td style="text-align: right;"><button class="btn btn-primary" type="button" style="margin-right: 5px;"><i class="far fa-star"></i></button><button class="btn btn-primary" type="button"><i class="fas fa-user-plus"></i></button></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-8 offset-lg-0 align-self-center"><label class="form-label">Jugadores por página<select class="d-inline-block form-select form-select-sm">
+                                            <option value="10" selected="">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select></label>
+                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Jugadores del 1 al 10 de {{jugadores|length}}</p>
+                                </div>
+                                <div class="col">
+                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            {% if page_obj.has_previous %}
+                                                {%if not page_obj.previous_page_number == 1 %}
+                                                    <li class="page-item "><a class="page-link" href="?page=1">1</a></li>
+                                                {% endif %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                                            {% endif %}
+                                            <li class="page-item active"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                                            {% if page_obj.has_next %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                                                {%if not page_obj.next_page_number == page_obj.paginator.num_pages %}
+                                                    <li class="page-item"><a class="page-link" aria-label="Next" href="?page={{ page_obj.paginator.num_pages }}"><span aria-hidden="true">{{ page_obj.paginator.num_pages }}</span></a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © MiFantasy 2022</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+</body>
+
+{% endblock %}

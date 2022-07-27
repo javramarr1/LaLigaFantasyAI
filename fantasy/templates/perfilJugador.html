@@ -1,0 +1,320 @@
+{% include "navbar.html" %}
+{% block extrahead %}
+
+    <meta charset="utf-8">
+   
+    <title>Perfil - MiFantasy</title>
+    
+{% endblock %}
+
+{% block content %}
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4">{{jugador.nombre}}</h3>
+                    <div class="row mb-3">
+                        <div class="col-lg-4">
+                            <div class="card mb-3">
+                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="../../assets/img/dogs/image2.jpeg" width="160" height="160">
+                                    <div class="row">
+                                        <div class="col"><button class="btn btn-primary btn-sm" type="button">Añadir a mi equipo</button></div>
+                                        <div class="col"><button class="btn btn-primary btn-sm" type="button">Añadir a favoritos</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                    <p class="text-primary m-0 fw-bold">Datos generales</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="team"><strong>Equipo</strong><br><span>{{jugador.equipo}}</span></label></div>
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="position"><strong>Posición</strong><br><span>{{jugador.posicion}}</span></label></div>
+                                        <div class="col-lg-12 text-center"><label class="col-form-label" for="state"><strong>Estado</strong><br><span>{{jugador.estado}}</span></label></div>
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="points"><strong>Puntos</strong><br><span>{{jugador.getPuntosTotales}}</span></label></div>
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="mediaPoints"><strong>Media de puntos</strong><br><span>{{jugador.getMediaPuntos}}</span></label></div>
+                                        <div class="col-lg-12 offset-lg-0" style="text-align: center;"><label class="col-form-label" for="value"><strong>Valor de mercado</strong><br><span>{{jugador.getValorDisplay}}</span></label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-3 text-center mb-4">
+                                    <div class="card text-white bg-primary shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Asistente</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 text-center mb-4">
+                                    <div class="card text-white bg-success shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Titular</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 text-center mb-4">
+                                    <div class="card text-white bg-info shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Tarjetero</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 text-center mb-4">
+                                    <div class="card text-white bg-warning shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Regateador</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="text-primary fw-bold m-0">Promedio estadísticas</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4 class="small fw-bold">Minutos jugados<span class="float-end">{{totales.minutos__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-danger" aria-valuenow="{{totales.minutos__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.minutos__sum}}" style="width: {% widthratio totales.minutos__sum maxs.minutos__sum 100 %}%;"><span class="visually-hidden">20%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Goles<span class="float-end">{{totales.goles__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-warning" aria-valuenow="{{totales.goles__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.goles__sum}}" style="width: {% widthratio totales.goles__sum maxs.goles__sum 100 %}%;"><span class="visually-hidden">{{stats}}</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Asistencias<span class="float-end">{{totales.asist__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-warning" aria-valuenow="{{totales.asist__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.asist__sum}}" style="width: {% widthratio totales.asist__sum maxs.asist__sum 100 %}%;"><span class="visually-hidden">40%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Asistencias sin gol<span class="float-end">{{totales.asistSinGol__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-primary" aria-valuenow="{{totales.asistSinGol__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.asistSinGol__sum}}" style="width: {% widthratio totales.asistSinGol__sum maxs.asistSinGol__sum 100 %}%;"><span class="visually-hidden">60%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Tiros<span class="float-end">{{totales.tiros__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.tiros__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.tiros__sum}}" style="width: {% widthratio totales.tiros__sum maxs.tiros__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Paradas<span class="float-end">{{totales.paradas__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-info" aria-valuenow="{{totales.paradas__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.paradas__sum}}" style="width: {% widthratio totales.paradas__sum maxs.paradas__sum 100 %}%;"><span class="visually-hidden">80%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Amarillas<span class="float-end">{{totales.amarillas__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.amarillas__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.amarillas__sum}}" style="width: {% widthratio totales.amarillas__sum maxs.amarillas__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Rojas<span class="float-end">{{totales.rojas__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.rojas__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.rojas__sum}}" style="width: {% widthratio totales.rojas__sum maxs.rojas__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <h4 class="small fw-bold">Centros<span class="float-end">{{totales.centros__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-danger" aria-valuenow="{{totales.centros__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.centros__sum}}" style="width: {% widthratio totales.centros__sum maxs.centros__sum 100 %}%;"><span class="visually-hidden">20%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Despejes<span class="float-end">{{totales.despejes__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-warning" aria-valuenow="{{totales.despejes__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.despejes__sum}}" style="width: {% widthratio totales.despejes__sum maxs.despejes__sum 100 %}%;"><span class="visually-hidden">40%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Penaltis fallados<span class="float-end">{{totales.penFallados__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-primary" aria-valuenow="{{totales.penFallados__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.penFallados__sum}}" style="width: {% widthratio totales.penFallados__sum maxs.penFallados__sum 100 %}%;"><span class="visually-hidden">60%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Goles encajados<span class="float-end">{{totales.encajados__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-info" aria-valuenow="{{totales.encajados__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.encajados__sum}}" style="width: {% widthratio totales.encajados__sum maxs.encajados__sum 100 %}%;"><span class="visually-hidden">80%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Regates<span class="float-end">{{totales.regates__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.regates__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.regates__sum}}" style="width: {% widthratio totales.regates__sum maxs.regates__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Recuperaciones<span class="float-end">{{totales.recuperaciones__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.recuperaciones__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.recuperaciones__sum}}" style="width: {% widthratio totales.recuperaciones__sum maxs.recuperaciones__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Posesiones perdidas<span class="float-end">{{totales.perdidas__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.perdidas__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.perdidas__sum}}" style="width: {% widthratio totales.perdidas__sum maxs.perdidas__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                    <h4 class="small fw-bold">Puntos marca<span class="float-end">{{totales.ptsMarca__sum}}</span></h4>
+                                                    <div class="progress progress-sm mb-3">
+                                                        <div class="progress-bar bg-success" aria-valuenow="{{totales.ptsMarca__sum}}" aria-valuemin="0" aria-valuemax="{{maxs.ptsMarca__sum}}" style="width: {% widthratio totales.ptsMarca__sum maxs.ptsMarca__sum 100 %}%;"><span class="visually-hidden">100%</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">Jugadores similares</h5>
+                                                <p class="text-muted mb-1">Basados en estadísticas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="70" height="70" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">John Smith</h5>
+                                                <p class="text-muted mb-1">Erat netus</p>
+                                                <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span class="btn-success">MC</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>170 pts</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>48.000.000€</span></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="70" height="70" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">Sergio Canales</h5>
+                                                <p class="text-muted mb-1">Real Betis</p>
+                                                <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span class="btn-success">MC</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>170 pts</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>48.000.000€</span></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="70" height="70" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">John Smith</h5>
+                                                <p class="text-muted mb-1">Erat netus</p>
+                                                <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span class="btn-success">MC</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>170 pts</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>48.000.000€</span></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="70" height="70" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">Iker Muniain</h5>
+                                                <p class="text-muted mb-1">Athletic Club</p>
+                                                <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span class="btn-success">MC</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>170 pts</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>48.000.000€</span></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card border-0 shadow-none">
+                                        <div class="card-body d-flex align-items-center p-0"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="70" height="70" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div>
+                                                <h5 class="fw-bold text-primary mb-0">John Smith</h5>
+                                                <p class="text-muted mb-1">Erat netus</p>
+                                                <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span class="btn-success">MC</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>170 pts</span></div>
+                                                    </li>
+                                                    <li class="list-inline-item text-center">
+                                                        <div class="d-flex flex-column align-items-center"><span>48.000.000€</span></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Evolución del valor de mercado</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="username"><strong>Valor actual</strong><br><span>{{jugador.getValorDisplay}}</span></label></div>
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="username"><strong>Predicción a tres jornadas</strong><br><span>14.000.000€</span></label></div>
+                                        <div class="col-lg-12 text-center"><label class="col-form-label" for="username"><strong>Predicción a cinco jornadas</strong><br><span>17.000.000€</span></label></div>
+                                        <div class="col-lg-12" style="text-align: center;"><label class="col-form-label" for="username"><strong>Predicción a diez jornadas</strong><br><span>16.000.000€</span></label></div>
+                                        <div class="col-lg-12 offset-lg-0" style="text-align: center;"><label class="col-form-label" for="last_name"><strong>Algo</strong><br><span>algo</span></label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © MiFantasy 2022</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+</body>
+{% endblock %}
+
+</html>
