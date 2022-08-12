@@ -85,6 +85,8 @@ def crea_lineas(v,v_mercado,var1,var2):
                     datos[i]=[i,datos[i][0],datos[i][1],0,datos[i][3],datos[i][4],datos[i][5],log(valor)]
             if tarjetas == 5:
                 tarjetas = 0
+
+        #Si al jugador se le ha colado info con valores de mercado nulos se eliminan (no se añaden ni ceros)
         else:
             if i in datos:
                 del datos[i]            
@@ -143,6 +145,7 @@ def crea_lineas_completas(v,v_mercado):
         valor = v_mercado[i-1]
         if not pd.isna(valor):
             
+            #Si no se encuentra la jornada, puntuaciones a 0
             if not i in datos:
                 datos[i]=[0]*17
             

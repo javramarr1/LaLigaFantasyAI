@@ -1,5 +1,5 @@
 from django.db import models
-from math import exp
+from math import exp,log
 from django.db.models import Sum,Max
 
 # Create your models here.
@@ -23,8 +23,20 @@ class Jugador(models.Model):
     def getValorActual(self):
         return Valores.getLastValor(self.id)
     
-    def getValorDisplay(self):
-        v = str(self.getValorActual())
+    def getValorActualDisplay(self):
+        v = str(int(exp(self.getValorActual())))
+        match len(v):
+            case 6:
+                return v[0]+v[1]+v[2] + "." + v[3]+v[4]+v[5] + " €"
+            case 7:
+                return v[0] + "." +v[1]+v[2]+v[3] + "." + v[4]+v[5]+v[6] + " €"
+            case 8:
+                return v[0]+v[1]+ "." +v[2]+v[3]+v[4] + "." + v[5]+v[6]+v[7] + " €"
+            case 9:
+                return v[0]+v[1]+v[2] + "." +v[3]+v[4]+v[5] + "." + v[6]+v[7]+v[8] + " €"
+    
+    def valorDisplay(valor):
+        v= str(int(exp(valor)))
         match len(v):
             case 6:
                 return v[0]+v[1]+v[2] + "." + v[3]+v[4]+v[5] + " €"
@@ -37,6 +49,9 @@ class Jugador(models.Model):
 
     def getPuntosTotales(self):
         return Stats.objects.filter(jugador_id=self.id).aggregate(Sum('puntos'))['puntos__sum']
+
+    def jugados(self):
+        return Stats.objects.filter(jugador_id=self.id).exclude(minutos=0).count()
 
     def getMediaPuntos(self):
         jugador = Stats.objects.filter(jugador_id=self.id)
@@ -67,6 +82,21 @@ class Stats(models.Model):
     recuperaciones = models.SmallIntegerField()
     perdidas = models.SmallIntegerField()
     ptsMarca = models.SmallIntegerField()
+
+    def lineaVentana(self, posicion):
+        valor = Valores.objects.filter(jugador_id = self.jugador_id,jornada=self.jornada)[0]
+        cadena = str(self.puntos) + ',' + str(self.minutos) + ',' + str(self.amarillas) + ',' + str(self.rojas)
+        if posicion == 'PO':
+            cadena += ',' + str(self.encajados) + ',' + str(self.paradas) + ',' + str(valor)
+        elif posicion == 'DF':
+            cadena += ',' + str(self.recuperaciones) + ',' + str(self.encajados) + ',' + str(valor)
+        elif posicion == 'MC':
+            cadena += ',' + str(self.asist) + ',' + str(self.recuperaciones) + ',' + str(valor)
+            
+        else:
+            cadena += ',' + str(self.goles) + ',' + str(self.asist) + ',' + str(valor)
+        
+        return cadena
 
     def getTotalJugador(id):
         puntos = Stats.objects.filter(jugador_id=id).aggregate(Sum('puntos'))
@@ -122,15 +152,12 @@ class Valores(models.Model):
     valor = models.FloatField()
 
     def getLastValor(id):
-        return Valores.objects.filter(jugador_id = id).order_by("jornada").last()
-    
-    def getValorReal(self):
-        return exp(self.valor)
+        return Valores.objects.filter(jugador_id = id).order_by("jornada").last().valor
 
     def __str__(self):
         #Me gustaría que la string fuese esta para poder verlo mejor en la bbdd
         #self.jugador_id.nombre + " J" + str(self.jornada)
-        return str(int(exp(self.valor)))
+        return str(self.valor)
 
     
 

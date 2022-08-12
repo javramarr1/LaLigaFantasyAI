@@ -25,6 +25,7 @@ urlpatterns = [
     path('login/',views.login_view,name="login"),
     path('registro/',views.register_view,name="registro"),
     path('logout/',views.logout_view,name="logout"),
-    path('perfil/<int:jugador_id>',views.perfil_jugador ,name="perfilJugador")
+    path('perfil/<int:jugador_id>',views.perfil_jugador ,name="perfilJugador"),
+    path('usuario/<slug:username>',views.mi_equipo ,name="equipoUsuario")
 
 ]

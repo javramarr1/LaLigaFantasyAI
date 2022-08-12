@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="../../assets/css/Team-images.css">
 </head>
 
+<style>
+    .errorlist{
+    list-style-type:none;
+    color:red;
+    font-size:20px;
+    margin:0;
+    padding:0;
+}
+</style>
+
 <body class="bg-gradient-primary">
     <div class="container">
         <div class="card shadow-lg o-hidden border-0 my-5">
@@ -25,13 +35,17 @@
                             <div class="text-center">
                                 <h4 class="text-dark mb-4">Crea tu cuenta</h4>
                             </div>
-                            <form class="user">
-                                <div class="mb-3"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Usuario" name="username"></div>
-                                <div class="mb-3"><input class="form-control form-control-user" type="email" id="exampleInputEmail-1" aria-describedby="emailHelp" placeholder="Correo electrónico" name="email"></div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Contraseña" name="password"></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="exampleRepeatPasswordInput" placeholder="Repita la contraseña" name="password_repeat"></div>
-                                </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Regístrate</button>
+                            <form class="user" method="POST">
+                                {% csrf_token %}
+                                {% if form.username.errors %}<span class = "alert alert-danger"> {{  form.username.errors | striptags  }}<br> </span><br>{% endif %}
+                                <div class="mb-3">{{  form.username  }}</div>
+                                {% if form.correo.errors %}<br><span class = "alert alert-danger"> {{  form.correo.errors | striptags  }} <br></span><br>{% endif %}
+                                <div class="mb-3">{{ form.correo }}</div>
+                                {% if form.password.errors %}<br><span class = "alert alert-danger"> {{  form.password.errors | striptags  }}<br> </span><br>{% endif %}
+                                <div class="mb-3">{{ form.password }}</div>
+                                {% if form.password2.errors %}<br><span class = "alert alert-danger"> {{  form.password2.errors | striptags  }} <br></span><br>{% endif %}
+                                <div class="mb-3">{{ form.password2 }}</div>
+                                <button class="btn btn-primary d-block btn-user w-100" type="submit">Regístrate</button>
                                 <hr>
                             </form>
                             <div class="text-center"><a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a></div>
