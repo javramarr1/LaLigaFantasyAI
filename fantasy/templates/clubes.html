@@ -1,0 +1,111 @@
+{% include "navbar.html" %}
+{% block extrahead %}
+
+    <meta charset="utf-8">
+   
+    <title>{{equipo}} - MiFantasy</title>
+    
+{% endblock %}
+
+{% block content %}
+
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4">{{equipo}}</h3>
+                    <div class="card shadow">
+                        <div class="card-header py-3" style="height: 61px;">
+                            <div class="row">
+                                <div class="col-7 col-sm-5 col-md-3 col-lg-3">
+                                    <p class="text-primary m-0 fw-bold">Plantilla</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="margin-top: -20px;">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                <table class="table my-0" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Nombre</th>
+                                            <th>Puntos</th>
+                                            <th>Posición</th>
+                                            <th>Estado</th>
+                                            <th>Precio</th>
+                                            {%if request.user.is_authenticated%}
+                                            <th></th>
+                                            {%endif%}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for j in club%}
+                                        <tr>
+                                            <td style="text-align:center;"><img class="rounded-circle me-2" style="margin-top: 2%;" width="30" height="30" src='../../assets/img/jugadores/{{j.nombre.strip|cut:" "|lower}}.png' onerror="this.onerror=null; this.src='../../assets/img/jugadores/default.png'"></td>
+                                            <td><a class="nav-link" href="{% url 'perfilJugador' jugador_id=j.id%}"><span>{{j.nombre}}</span></a></td>
+                                            <td>{{j.getPuntosTotales}}</td>
+                                            <td>{{j.posicion}}</td>
+                                            <td>{{j.estado}}</td>
+                                            <td>{{j.getValorActualDisplay}}</td>
+                                            {%if request.user.is_authenticated%}
+                                                <td style="text-align: right;width: 10%;">
+                                                    <div class="row">
+                                                        <div class="col" >
+                                                            <form class="user" method="POST">
+                                                                {% csrf_token %}
+                                                                {% if j in plantilla%}
+                                                                <input class="btn fa" name="icon" type="submit" style="margin-right: 5px;color:#ff0e0e;" value="&#xf503">
+                                                                <input name="tipo" type="hidden" value="delSquad">
+                                                                {%else%}
+                                                                <input class="btn fa" name="icon" type="submit" style="margin-right: 5px;color:#0E9CFF;" value="&#xf234">
+                                                                <input name="tipo" type="hidden" value="addSquad">
+                                                                {%endif%}
+                                                                <input name="jug" type="hidden" value="{{j.id}}">
+                                                                
+                                                            </form>
+                                                        </div>
+                                                        <div class="col">
+                                                            <form class="user" method="POST">
+                                                                {% csrf_token %}
+                                                                {% if j in favs%}
+                                                                <input class="btn fa" name="icon" type="submit" style="color: #f0e32a;" value="&#xf005">
+                                                                <input name="tipo" type="hidden" value="delFavs">
+                                                                {% else %}
+                                                                <input class="btn fa" name="icon" type="submit" style="color: #0E9CFF;" value="&#xf005">
+                                                                <input name="tipo" type="hidden" value="addFavs">
+                                                                {%endif%}
+                                                                <input name="jug" type="hidden" value="{{j.id}}">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {%endif%}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © MiFantasy 2022</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+</body>
+
+{% endblock %}

@@ -1,11 +1,13 @@
 from django.db import models
 from math import exp,log
 from django.db.models import Sum,Max
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Equipo(models.Model):
     # A ver si el equipo se puede meter como campo en el jugador o mejor se deja fuera
+    id = models.PositiveSmallIntegerField(default=1)
     nombre = models.CharField(max_length=50,primary_key=True)
     
     def __str__(self):
@@ -35,8 +37,11 @@ class Jugador(models.Model):
             case 9:
                 return v[0]+v[1]+v[2] + "." +v[3]+v[4]+v[5] + "." + v[6]+v[7]+v[8] + " €"
     
-    def valorDisplay(valor):
-        v= str(int(exp(valor)))
+    def valorDisplay(valor,expo):
+        if expo:
+            v= str(int(exp(valor)))
+        else:
+            v = str(valor)
         match len(v):
             case 6:
                 return v[0]+v[1]+v[2] + "." + v[3]+v[4]+v[5] + " €"
@@ -58,6 +63,10 @@ class Jugador(models.Model):
         #solo las jornadas que han jugado o se hace la media sobre todas?
         jornadas = jugador.exclude(minutos=0).count()
         return round(jugador.aggregate(Sum('puntos'))['puntos__sum']/jornadas,2)
+
+    # def addToPlantilla(self):
+    #     jugadores.append(self)
+    #     Plantilla.objects.update(user=)
 
     def __str__(self):
         return self.nombre
@@ -143,6 +152,9 @@ class Stats(models.Model):
 
     #plantearse si incluir minimos solo habria que cambiar el orderby de los maximos
 
+    def valorJornada(self):
+        return Valores.objects.filter(jugador_id=self.jugador_id,jornada=self.jornada)
+
     def __str__(self):
         return self.jugador_id.nombre + " J" + str(self.jornada)
 
@@ -159,11 +171,19 @@ class Valores(models.Model):
         #self.jugador_id.nombre + " J" + str(self.jornada)
         return str(self.valor)
 
+class Plantilla(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    jugadores = models.ManyToManyField(Jugador,blank=True)
+
+    def __str__(self):
+        return "Plantilla de " + str(self.user.username)
     
+class Favoritos(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    jugadores = models.ManyToManyField(Jugador,blank=True)
 
-
-
-
+    def __str__(self):
+        return "Favoritos de " + str(self.user.username)
 
 
 

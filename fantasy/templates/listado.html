@@ -4,6 +4,39 @@
     <meta charset="utf-8">
    
     <title>Jugadores - MiFantasy</title>
+
+    <script type="text/javascript">
+
+        function myFunction() {
+          var input, filter, section, tr, nombre, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          section = document.getElementById("tablaContent");
+          tr = section.getElementsByTagName("tr");
+          var a = JSON.parse('{{ jug | safe }}');
+            filteredArr = a.filter(x=> x['fields']['nombre'].includes(filter))
+            console.log(filteredArr)
+
+          for (i = 0; i < tr.length; i++) {
+            nombre = tr[i].getElementsByTagName("span")[0];
+            if (nombre) {
+              var palabrasEnFiltro = filter.split(' ');
+              var hallado = 0;
+              for (var filtro of palabrasEnFiltro) {
+                if (nombre.innerHTML.toUpperCase().indexOf(filtro) > -1) {
+                  hallado++;
+                }
+              }
+              if (hallado === palabrasEnFiltro.length) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+        
+            }
+          }
+        }
+        </script>
     
 {% endblock %}
 
@@ -23,7 +56,7 @@
                                     <p class="text-primary m-0 fw-bold">Información general</p>
                                 </div>
                                 <div class="col-5 col-sm-4 col-md-3 col-lg-3 offset-sm-3 offset-md-6 offset-lg-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Busca un jugador"></label></div>
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="text" id="myInput" class="form-control form-control-sm" onkeyup="myFunction()" placeholder="Buscar un jugador"></label></div>
                                 </div>
                             </div>
                         </div>
@@ -38,30 +71,60 @@
                                             <th>Posición</th>
                                             <th>Equipo</th>
                                             <th>Precio</th>
+                                            {%if request.user.is_authenticated%}
                                             <th></th>
+                                            {%endif%}
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tablaContent">
                                         {% for j in page_obj%}
                                         <tr>
-                                            <td style="text-align:center;"><img class="rounded-circle me-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg"></td>
-                                            <td><a class="nav-link" href="{% url 'perfilJugador' jugador_id=j.id%}"><span>{{j.nombre}}</span></a></td>
+                                            <td style="text-align:center;"><img class="rounded-circle me-2" width="30" height="30" src='../../assets/img/jugadores/{{j.nombre.strip|cut:" "|lower}}.png' onerror="this.onerror=null; this.src='../../assets/img/jugadores/default.png'"></td>
+                                            <td><a class="nav-link" href="{% url 'perfilJugador' jugador_id=j.id%}"><span id="nombre">{{j.nombre}}</span></a></td>
                                             <td>{{j.getPuntosTotales}}</td>
                                             <td>{{j.posicion}}</td>
-                                            <td>{{j.equipo}}</td>
+                                            <td><a class="nav-link" href="{% url 'clubes' club_id=j.equipo.id%}"><span>{{j.equipo}}</span></a></td>
                                             <td>{{j.getValorActualDisplay}}</td>
-                                            <td style="text-align: right;"><button class="btn btn-primary" type="button" style="margin-right: 5px;"><i class="far fa-star"></i></button><button class="btn btn-primary" type="button"><i class="fas fa-user-plus"></i></button></td>
+                                            {%if request.user.is_authenticated%}
+                                            <td style="text-align: right;width: 10%;">
+                                                <div class="row">
+                                                    <div class="col" >
+                                                        <form class="user" method="POST">
+                                                            {% csrf_token %}
+                                                            {% if j in plantilla%}
+                                                            <input class="btn fa" name="icon" type="submit" style="margin-right: 5px;color:#ff0e0e;" value="&#xf503">
+                                                            <input name="tipo" type="hidden" value="delSquad">
+                                                            {%else%}
+                                                            <input class="btn fa" name="icon" type="submit" style="margin-right: 5px;color:#0E9CFF;" value="&#xf234">
+                                                            <input name="tipo" type="hidden" value="addSquad">
+                                                            {%endif%}
+                                                            <input name="jug" type="hidden" value="{{j.id}}">
+                                                            
+                                                        </form>
+                                                    </div>
+                                                    <div class="col">
+                                                        <form class="user" method="POST">
+                                                            {% csrf_token %}
+                                                            {% if j in favs%}
+                                                            <input class="btn fa" name="icon" type="submit" style="color: #f0e32a;" value="&#xf005">
+                                                            <input name="tipo" type="hidden" value="delFavs">
+                                                            {% else %}
+                                                            <input class="btn fa" name="icon" type="submit" style="color: #0E9CFF;" value="&#xf005">
+                                                            <input name="tipo" type="hidden" value="addFavs">
+                                                            {%endif%}
+                                                            <input name="jug" type="hidden" value="{{j.id}}">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            {%endif%}
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="6"></td>
+                                            
                                         </tr>
                                     </tfoot>
                                 </table>

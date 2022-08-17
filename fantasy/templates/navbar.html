@@ -10,6 +10,36 @@
         <link rel="stylesheet" href="../../assets/css/Stats-icons.css">
         <link rel="stylesheet" href="../../assets/css/Team-images.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+            function myFunction() {
+              var input, filter, section, tr, nombre, i;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              section = document.getElementById("tablaContent");
+              tr = section.getElementsByTagName("tr");
+
+              for (i = 0; i < tr.length; i++) {
+                nombre = tr[i].getElementsByTagName("span")[0];
+                if (nombre) {
+                  var palabrasEnFiltro = filter.split(' ');
+                  var hallado = 0;
+                  for (var filtro of palabrasEnFiltro) {
+                    if (nombre.innerHTML.toUpperCase().indexOf(filtro) > -1) {
+                      hallado++;
+                    }
+                  }
+                  if (hallado === palabrasEnFiltro.length) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+            
+                }
+              }
+            }
+            </script>
     </head>
 
     <body id="page-top">
@@ -20,10 +50,6 @@
                         <div class="container-fluid">
                                 <div class="navbar-brand sidebar-brand-icon rotate-n-15"><i class="fas fa-chart-pie"></i></div>
                                 <div class="navbar-brand sidebar-brand-text mx-3"><span>MiFantasy</span></div>
-                                
-                            <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Busca jugador"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                            </form>
                             <ul class="navbar-nav flex-nowrap ms-auto">
                                 <li class="nav-item"><a class="nav-link" href="{% url 'rankings'%}"><i class="fas fa-tachometer-alt"></i><span>&nbsp;Destacados</span></a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-table"></i><span>&nbsp;Jugadores</span></a></li>
@@ -44,3 +70,7 @@
         </div>
     </body>
 </html>
+
+<!-- <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+  <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Busca jugador"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+</form> -->

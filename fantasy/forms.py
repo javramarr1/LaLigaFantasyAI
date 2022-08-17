@@ -63,3 +63,15 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError('La dirección de correo electrónico ya está en uso')
 
         return correo
+
+
+class addJugadorForm(forms.Form):
+
+    addSquad = forms.CharField(required=False)
+    addFavs = forms.CharField(required=False)
+
+class accionesJugadorForm(forms.Form):
+
+    icon = forms.CharField(required=False)
+    jug = forms.CharField(required=False)
+    tipo = forms.CharField(required=False)
