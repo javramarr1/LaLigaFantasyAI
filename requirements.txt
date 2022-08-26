@@ -4,6 +4,4 @@ django-heroku
 joblib
 pandas
 numpy
-io
 sklearn
-math
