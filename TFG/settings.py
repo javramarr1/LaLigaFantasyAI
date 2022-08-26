@@ -81,9 +81,9 @@ ASGI_APPLICATION = 'TFG.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tfg',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': 'TFG',
+        'USER': 'admin',
+        'PASSWORD': 'Contrasena22.',
         'HOST': 'localhost',
         'PORT':'5432',
     }
