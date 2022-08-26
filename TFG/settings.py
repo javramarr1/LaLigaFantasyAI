@@ -82,8 +82,6 @@ DATABASES = {
         'NAME': 'tfg',
         'USER': 'admin',
         'PASSWORD': 'Contrasena22@',
-        'HOST': 'localhost',
-        'PORT':5432,
     }
 }
 
