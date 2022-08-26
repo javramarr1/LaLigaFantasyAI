@@ -72,6 +72,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'TFG.wsgi.application'
 
+ASGI_APPLICATION = 'TFG.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
