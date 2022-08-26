@@ -3,7 +3,7 @@
 
     <meta charset="utf-8">
    
-    <title>{{equipo}} - MiFantasy</title>
+    <title>{{equipo}} - FantasyTips</title>
     
 {% endblock %}
 
@@ -50,7 +50,7 @@
                                             <td>{{j.estado}}</td>
                                             <td>{{j.getValorActualDisplay}}</td>
                                             {%if request.user.is_authenticated%}
-                                                <td style="text-align: right;width: 10%;">
+                                                <td style="text-align: right;width: 13%;">
                                                     <div class="row">
                                                         <div class="col" >
                                                             <form class="user" method="POST">
@@ -98,7 +98,7 @@
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © MiFantasy 2022</span></div>
+                    <div class="text-center my-auto copyright"><span>Copyright © FantasyTips 2022</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>

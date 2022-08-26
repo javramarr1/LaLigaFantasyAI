@@ -288,7 +288,25 @@ def almacena_jugador():
         jug.write(str(jugador['playerId'])+","+jugador['nn']+","+estado+","+posicion+","+str(jugador["tn"])+"\n")
 
     jug.close()
-        
+
+
+##################################################################################################ç
+
+def leer_jugadores(fichero):
+
+    f = open(fichero,"rt",encoding='utf-8')
+    csv = f.readlines()   
+
+    i = 1
+
+    for i in range(1,len(csv)):
+
+        jugador = csv[i].split(",")
+        equipo = Equipo.objects.get_or_create(equipo=jugador[4])
+        Jugador.objects.get_or_create(id= int(jugador[0]),nombre = jugador[1],estado = jugador[2],posicion = jugador[3],equipo = equipo[0])
+        i+=1
+
+    f.close()
 
 ##################################################################################################
 

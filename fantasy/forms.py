@@ -64,12 +64,13 @@ class RegisterForm(forms.Form):
 
         return correo
 
-
+#Perfil individual
 class addJugadorForm(forms.Form):
 
     addSquad = forms.CharField(required=False)
     addFavs = forms.CharField(required=False)
 
+#Botones de los listados
 class accionesJugadorForm(forms.Form):
 
     icon = forms.CharField(required=False)

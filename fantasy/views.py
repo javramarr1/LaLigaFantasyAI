@@ -317,8 +317,7 @@ def mi_equipo(request,username):
         pts = round(pts/total,2)
     
     vt = Jugador.valorDisplay(valorTotal, False) if Jugador.valorDisplay(valorTotal, False) else 0
-    print(j)
-
+    
     params = {'plantilla':j,'fav':fav.jugadores.all(),'por':por,'df':df,'med':med,'dc':dc,
     'valorTotal':vt,'mediaPts':pts,'total':total, 'warning': warning, 'form':form}
 

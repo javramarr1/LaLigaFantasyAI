@@ -3,7 +3,7 @@
 
     <meta charset="utf-8">
    
-    <title>Mi perfil - MiFantasy</title>
+    <title>Mi perfil - FantasyTips</title>
     
 {% endblock %}
 
@@ -220,7 +220,7 @@
                                                         {% csrf_token %}
                                                         <td style="text-align: right;width: 1%;"><input class="btn fa" name="icon" type="submit" style="margin-right: 5px; color: red;" value="&#xf2ed;"></td>
                                                         <input name="jug" type="hidden" value="{{p.id}}">
-                                                        <input name="tipo" type="hidden" value="delFav">
+                                                        <input name="tipo" type="hidden" value="delFavs">
                                                     </form>
                                                 </tr>
                                                 {%endfor%}
@@ -246,7 +246,7 @@
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © MiFantasy 2022</span></div>
+                    <div class="text-center my-auto copyright"><span>Copyright © FantasyTips 2022</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
