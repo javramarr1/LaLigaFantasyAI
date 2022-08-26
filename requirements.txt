@@ -6,4 +6,4 @@ pandas
 numpy
 sklearn
 requests
-daphne
+gunicorn
