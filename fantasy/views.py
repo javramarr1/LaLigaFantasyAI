@@ -14,7 +14,7 @@ from sklearn.neighbors import NearestNeighbors
 from math import exp
 
 from .forms import RegisterForm, accionesJugadorForm, addJugadorForm
-from .scraping import almacena_jugador, estadisticas_bbdd
+from .scraping import leer_jugadores, estadisticas_bbdd
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -86,6 +86,13 @@ def inicio(request):
     return render(request,'listado.html',params)
 
 def carga_datos(request):
+
+    jugadores = leer_jugadores('TFG/fantasy/csv/listado2122.csv')
+    estadisticas_bbdd('TFG/fantasy/csv/porteros2122.csv')
+    estadisticas_bbdd('TFG/fantasy/csv/defensas2122.csv')
+    estadisticas_bbdd('TFG/fantasy/csv/medios2122.csv')
+    estadisticas_bbdd('TFG/fantasy/csv/delanteros2122.csv')
+
     nombres,jugados,vals,mins,pts= [],[],[],[],[]
     for j in jugadores:
         totales = Stats.getTotalJugador(j.id)
@@ -105,11 +112,7 @@ def carga_datos(request):
     neigh.fit(df.drop(columns=['nombre']))
     dump(neigh,'fantasy/joblibs/knn/knn.joblib')
 
-    # jugadores = almacena_jugador()
-    # estadisticas_bbdd('TFG/fantasy/csv/porteros2122.csv')
-    # estadisticas_bbdd('TFG/fantasy/csv/defensas2122.csv')
-    # estadisticas_bbdd('TFG/fantasy/csv/medios2122.csv')
-    # estadisticas_bbdd('TFG/fantasy/csv/delanteros2122.csv')
+
         
     return render(request,'listado.html')
 

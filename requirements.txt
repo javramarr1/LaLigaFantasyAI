@@ -1,4 +1,4 @@
 Django
 psycopg2==2.9.3
 django-heroku
-anaconda joblib
+joblib
