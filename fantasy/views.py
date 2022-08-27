@@ -86,11 +86,11 @@ def inicio(request):
 
 def carga_datos(request):
 
-    jugadores = leer_jugadores('TFG/fantasy/csv/listado2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/porteros2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/defensas2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/medios2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/delanteros2122.csv')
+    jugadores = leer_jugadores('fantasy/csv/listado2122.csv')
+    estadisticas_bbdd('fantasy/csv/porteros2122.csv')
+    estadisticas_bbdd('fantasy/csv/defensas2122.csv')
+    estadisticas_bbdd('fantasy/csv/medios2122.csv')
+    estadisticas_bbdd('fantasy/csv/delanteros2122.csv')
 
     nombres,jugados,vals,mins,pts= [],[],[],[],[]
     for j in jugadores:

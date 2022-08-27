@@ -43,7 +43,7 @@
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="card mb-3">
-                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src='../../assets/img/jugadores/{{jugador.nombre.strip|cut:" "|lower}}.png' width="160" height="160" onerror="this.onerror=null; this.src='../../assets/img/jugadores/default.png'">
+                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src='assets/img/jugadores/{{jugador.nombre.strip|cut:" "|lower}}.png' width="160" height="160" onerror="this.onerror=null; this.src='../../assets/img/jugadores/default.png'">
                                     {%if request.user.is_authenticated%}
                                     <form class="user" method="POST">
                                         {% csrf_token %}
