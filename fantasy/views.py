@@ -77,7 +77,7 @@ def inicio(request):
         params['plantilla'] = plantilla.jugadores.all()
         params['favs'] = fav.jugadores.all()
 
-    j = sorted(jugadores,key=lambda t:-t.getPuntosTotales())
+    j = sorted(jugadores,key=lambda t:t.getPuntosTotales(), reverse=True)
     p = Paginator(j,25)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
