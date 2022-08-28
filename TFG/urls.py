@@ -22,7 +22,12 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls,name="admin"),
     path('',views.inicio,name="inicio"),
-    path('cargar/',views.carga_datos,name="carga"),
+    path('cargarJugadores/',views.carga_jugadores,name="cargarJugadores"),
+    path('cargarDefensas/',views.carga_defensas,name="cargarDefensas"),
+    path('cargarPorteros/',views.carga_porteros,name="cargarPorteros"),
+    path('cargarMedios/',views.carga_medios,name="cargarMedios"),
+    path('cargarDelanteros/',views.carga_delanteros,name="cargarDelanteros"),
+    path('cargarJoblib/',views.carga_joblib,name="cargarJoblib"),
     path('rankings/',views.rankings,name="rankings"),
     path('login/',views.login_view,name="login"),
     path('registro/',views.register_view,name="registro"),

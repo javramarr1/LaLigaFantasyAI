@@ -297,7 +297,7 @@ def leer_jugadores(fichero):
     f = open(fichero,"rt",encoding='utf-8')
     csv = f.readlines()   
 
-    i = 1
+    i = 0
 
     for i in range(1,len(csv)):
 

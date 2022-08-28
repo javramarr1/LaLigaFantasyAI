@@ -84,14 +84,32 @@ def inicio(request):
     params.update({'jugadores':j,'page_obj':page_obj,'jug':jug})
     return render(request,'listado.html',params)
 
-def carga_datos(request):
+def carga_jugadores(request):
 
     leer_jugadores('fantasy/csv/listado2122.csv')
-    
+    return render(request,'404.html')
+
+def carga_porteros(request):
+
     estadisticas_bbdd('fantasy/csv/porteros2122.csv')
+    return render(request,'404.html')
+
+def carga_defensas(request):
+
     estadisticas_bbdd('fantasy/csv/defensas2122.csv')
+    return render(request,'404.html')
+
+def carga_medios(request):
+
     estadisticas_bbdd('fantasy/csv/medios2122.csv')
+    return render(request,'404.html')
+
+def carga_delanteros(request): 
+    
     estadisticas_bbdd('fantasy/csv/delanteros2122.csv')
+    return render(request,'404.html')
+
+def carga_joblib(request): 
 
     jugadores = Jugador.objects.all()
 
@@ -114,8 +132,6 @@ def carga_datos(request):
     neigh.fit(df.drop(columns=['nombre']))
     dump(neigh,'fantasy/joblibs/knn/knn.joblib')
 
-
-        
     return render(request,'listado.html')
 
 def perfil_jugador(request,jugador_id):
