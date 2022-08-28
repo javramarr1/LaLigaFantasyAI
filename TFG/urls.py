@@ -35,6 +35,4 @@ urlpatterns = [
     path('perfil/<int:jugador_id>',views.perfil_jugador ,name="perfilJugador"),
     path('usuario/<slug:username>',views.mi_equipo ,name="equipoUsuario"),
     path('club/<int:club_id>',views.clubes ,name="clubes"),
-    path('favicon.ico/', RedirectView.as_view(url=staticfiles_storage.url('fantasy/assets/img/'))),
-
 ]
