@@ -91,22 +91,37 @@ def carga_jugadores(request):
 
 def carga_porteros(request):
 
-    estadisticas_bbdd('fantasy/csv/porteros2122.csv')
+    estadisticas_bbdd('fantasy/csv/porteros2122.csv',False,1)
     return render(request,'404.html')
 
-def carga_defensas(request):
+def carga_defensas1(request):
 
-    estadisticas_bbdd('fantasy/csv/defensas2122.csv')
+    estadisticas_bbdd('fantasy/csv/defensas2122.csv',True,1)
     return render(request,'404.html')
 
-def carga_medios(request):
+def carga_defensas2(request):
 
-    estadisticas_bbdd('fantasy/csv/medios2122.csv')
+    estadisticas_bbdd('fantasy/csv/defensas2122.csv',True,2)
     return render(request,'404.html')
 
-def carga_delanteros(request): 
+def carga_medios1(request):
+
+    estadisticas_bbdd('fantasy/csv/medios2122.csv',True,1)
+    return render(request,'404.html')
+
+def carga_medios2(request):
+
+    estadisticas_bbdd('fantasy/csv/medios2122.csv',True,2)
+    return render(request,'404.html')
+
+def carga_delanteros1(request): 
     
-    estadisticas_bbdd('fantasy/csv/delanteros2122.csv')
+    estadisticas_bbdd('fantasy/csv/delanteros2122.csv',True,1)
+    return render(request,'404.html')
+
+def carga_delanteros2(request): 
+    
+    estadisticas_bbdd('fantasy/csv/delanteros2122.csv',True,2)
     return render(request,'404.html')
 
 def carga_joblib(request): 

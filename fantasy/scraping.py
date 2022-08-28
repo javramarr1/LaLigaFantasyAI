@@ -310,26 +310,50 @@ def leer_jugadores(fichero):
 
 ##################################################################################################
 
-def estadisticas_bbdd(fichero):
+def estadisticas_bbdd(fichero,section,sec):
 
     f = open(fichero,"rt",encoding='utf-8')
     csv = f.readlines()
 
-    i = 1
+    if section:
 
-    for i in range(1,len(csv)):
-        jornada = csv[i].split(",")
-        id = int(jornada[1])
-        n_jor = int(jornada[3])
-        try:
-            jugador = Jugador.objects.get(id=id)
-            Stats.objects.get_or_create(jugador_id=jugador,jornada = n_jor,puntos = int(jornada[4]),minutos = int(jornada[5]),goles = int(jornada[8]),asist = int(jornada[9]), asistSinGol = int(jornada[10]),
-            paradas = int(jornada[11]),amarillas = int(jornada[6]),rojas = int(jornada[7]), centros = int(jornada[12]),despejes = int(jornada[13]),penFallados = int(jornada[14]),
-            encajados = int(jornada[15]),tiros = int(jornada[16]),regates = int(jornada[17]),recuperaciones = int(jornada[18]),perdidas = int(jornada[19]),ptsMarca = int(jornada[20]))
+        if sec==1 :
+            i = 1
+            size = len(csv)/2
+        else:
+            i = len(csv)/2
+            size = len(csv)       
 
-            Valores.objects.get_or_create(jugador_id = jugador,jornada = n_jor,valor = float(jornada[21]))
-        except Jugador.DoesNotExist:
-            i+=1
+        for i in range(i,size):
+            jornada = csv[i].split(",")
+            id = int(jornada[1])
+            n_jor = int(jornada[3])
+            try:
+                jugador = Jugador.objects.get(id=id)
+                Stats.objects.get_or_create(jugador_id=jugador,jornada = n_jor,puntos = int(jornada[4]),minutos = int(jornada[5]),goles = int(jornada[8]),asist = int(jornada[9]), asistSinGol = int(jornada[10]),
+                paradas = int(jornada[11]),amarillas = int(jornada[6]),rojas = int(jornada[7]), centros = int(jornada[12]),despejes = int(jornada[13]),penFallados = int(jornada[14]),
+                encajados = int(jornada[15]),tiros = int(jornada[16]),regates = int(jornada[17]),recuperaciones = int(jornada[18]),perdidas = int(jornada[19]),ptsMarca = int(jornada[20]))
+
+                Valores.objects.get_or_create(jugador_id = jugador,jornada = n_jor,valor = float(jornada[21]))
+            except Jugador.DoesNotExist:
+                i+=1
+    
+    else:
+        i = 1
+
+        for i in range(1,len(csv)):
+            jornada = csv[i].split(",")
+            id = int(jornada[1])
+            n_jor = int(jornada[3])
+            try:
+                jugador = Jugador.objects.get(id=id)
+                Stats.objects.get_or_create(jugador_id=jugador,jornada = n_jor,puntos = int(jornada[4]),minutos = int(jornada[5]),goles = int(jornada[8]),asist = int(jornada[9]), asistSinGol = int(jornada[10]),
+                paradas = int(jornada[11]),amarillas = int(jornada[6]),rojas = int(jornada[7]), centros = int(jornada[12]),despejes = int(jornada[13]),penFallados = int(jornada[14]),
+                encajados = int(jornada[15]),tiros = int(jornada[16]),regates = int(jornada[17]),recuperaciones = int(jornada[18]),perdidas = int(jornada[19]),ptsMarca = int(jornada[20]))
+
+                Valores.objects.get_or_create(jugador_id = jugador,jornada = n_jor,valor = float(jornada[21]))
+            except Jugador.DoesNotExist:
+                i+=1
 
     f.close()
 '''
