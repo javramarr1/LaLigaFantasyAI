@@ -137,7 +137,7 @@ STATIC_URL = '/assets/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'fantasy/assets'),
 )
 
 STATICFILES_FINDERS = (
