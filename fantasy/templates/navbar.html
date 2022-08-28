@@ -48,34 +48,28 @@
               }
             }
             </script>
+            <style>
+              @media (max-width: 680px) {
+                .nav1{
+                  display: none;
+                }
+              }
+              @media (min-width: 680px) {
+                .nav2{
+                  display: none;
+                }
+              }
+            </style>
     </head>
 
     <body id="page-top">
-        <div id="wrapper">
-            <div class="d-flex flex-column" id="content-wrapper">
-                
-                    <nav class="navbar navbar-light navbar-expand bg-primary shadow mb-4 topbar static-top" media="min-width:650px">
-                        <div class="container-fluid">
-                                <div class="navbar-brand sidebar-brand-icon rotate-n-15"><i class="fas fa-chart-pie"></i></div>
-                                <div class="navbar-brand sidebar-brand-text mx-3"><span>FantasyTips</span></div>
-                            <ul class="navbar-nav flex-nowrap ms-auto">
-                                <li class="nav-item"><a class="nav-link" href="{% url 'rankings'%}"><i class="fas fa-tachometer-alt"></i><span>&nbsp;Destacados</span></a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-table"></i><span>&nbsp;Jugadores</span></a></li>
-                                <div class="d-none d-sm-block topbar-divider"></div>
-                                {% if not request.user.is_authenticated %}
-                                <li class="nav-item"><a class="nav-link" href="{% url 'login'%}"><i class="fas fa-user-tie"></i><span>&nbsp;Iniciar sesión</span></a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'registro'%}"><i class="fas fa-file-signature"></i><span>&nbsp;Registrarse</span></a></li>
-                                {% else %}
-                                <li class="nav-item"><a class="nav-link" href="{% url 'equipoUsuario' username=request.user.username%}"><i class="fas fa-chalkboard-teacher"></i><span>&nbsp;Mi equipo</span></a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-sign-out-alt"></i><span>&nbsp;Cerrar sesión</span></a></li>
-                                {% endif %}
-                                
-                            </ul>
-                        </div>
-                    </nav>
-                    <nav class="navbar navbar-light navbar-expand bg-primary shadow mb-4 topbar static-top" media="max-width:650px">
+      <div id="wrapper">
+          <div class="d-flex flex-column" id="content-wrapper">
+              
+                    <nav class="navbar navbar-light navbar-expand bg-primary shadow mb-4 topbar static-top nav1">
                       <div class="container-fluid">
                               <div class="navbar-brand sidebar-brand-icon rotate-n-15"><i class="fas fa-chart-pie"></i></div>
+                              <div class="navbar-brand sidebar-brand-text mx-3"><span>FantasyTips</span></div>
                           <ul class="navbar-nav flex-nowrap ms-auto">
                               <li class="nav-item"><a class="nav-link" href="{% url 'rankings'%}"><i class="fas fa-tachometer-alt"></i><span>&nbsp;Destacados</span></a></li>
                               <li class="nav-item"><a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-table"></i><span>&nbsp;Jugadores</span></a></li>
@@ -91,10 +85,30 @@
                           </ul>
                       </div>
                   </nav>
-                
-            </div>
-        </div>
-    </body>
+
+                  <nav class="navbar navbar-light navbar-expand bg-primary shadow mb-4 topbar static-top nav2">
+                    <div class="container-fluid">
+                      <div class="navbar-brand sidebar-brand-icon rotate-n-15"><i class="fas fa-chart-pie"></i></div>
+                      <div class="navbar-brand sidebar-brand-text mx-3"><span>FantasyTips</span></div>
+                        <ul class="navbar-nav flex-nowrap ms-auto" >
+                            <li class="nav-item"><a class="nav-link" href="{% url 'rankings'%}"><i class="fas fa-tachometer-alt"></i></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-table"></i></a></li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            {% if not request.user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login'%}"><i class="fas fa-user-tie"></i></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'registro'%}"><i class="fas fa-file-signature"></i></a></li>
+                            {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'equipoUsuario' username=request.user.username%}"><i class="fas fa-chalkboard-teacher"></i></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-sign-out-alt"></i></a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </nav>
+              
+          </div>
+      </div>
+  </body>
 </html>
 
 <!-- <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
