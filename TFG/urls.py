@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from fantasy import views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls,name="admin"),
@@ -28,5 +30,6 @@ urlpatterns = [
     path('perfil/<int:jugador_id>',views.perfil_jugador ,name="perfilJugador"),
     path('usuario/<slug:username>',views.mi_equipo ,name="equipoUsuario"),
     path('club/<int:club_id>',views.clubes ,name="clubes"),
+    path('favicon.ico/', RedirectView.as_view(url=staticfiles_storage.url('fantasy/assets/img/'))),
 
 ]
