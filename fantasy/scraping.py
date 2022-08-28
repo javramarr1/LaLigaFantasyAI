@@ -3,7 +3,7 @@ from datetime import datetime
 import requests as r
 import numpy as np
 import pandas as pd
-from math import log
+from math import log,floor
 from .models import Jugador,Equipo,Stats,Valores
 
 #hay jugadores que han llegado a la liga más tarde por lo que los valores desde su primera fecha a la primera jornada van a salir
@@ -319,9 +319,9 @@ def estadisticas_bbdd(fichero,section,sec):
 
         if sec==1 :
             i = 1
-            size = len(csv)/2
+            size = floor(len(csv)/2)
         else:
-            i = len(csv)/2
+            i = floor(len(csv)/2)
             size = len(csv)       
 
         for i in range(i,size):
