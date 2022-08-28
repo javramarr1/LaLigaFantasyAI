@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-v#r@h&w(5y=*=(ea6fc@_bzacyd4ukhgoiz#itdui)%ivfbhqj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fantasytips.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,8 +134,6 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 STATIC_ROOT = os.path.join(BASE_DIR, '/app/staticfiles/')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
