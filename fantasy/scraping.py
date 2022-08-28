@@ -299,7 +299,7 @@ def leer_jugadores(fichero):
 
     i = 0
 
-    for i in range(1,len(csv)):
+    for i in range(0,len(csv)):
 
         jugador = csv[i].split(",")
         equipo = Equipo.objects.get_or_create(nombre=jugador[4])
