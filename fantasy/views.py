@@ -66,6 +66,7 @@ def logout_view(request):
     return redirect(inicio)
 
 def inicio(request):
+    jugadores = Jugador.objects.all()
     jug = serializers.serialize("json", jugadores)
     params = {}
     if request.user.is_authenticated:
