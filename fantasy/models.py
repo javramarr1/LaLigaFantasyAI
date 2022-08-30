@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 
 class Equipo(models.Model):
     # A ver si el equipo se puede meter como campo en el jugador o mejor se deja fuera
-    id = models.PositiveSmallIntegerField(default=1)
-    nombre = models.CharField(max_length=50,primary_key=True)
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50)
     
     def __str__(self):
         return self.nombre

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-v#r@h&w(5y=*=(ea6fc@_bzacyd4ukhgoiz#itdui)%ivfbhqj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,16 +80,21 @@ ASGI_APPLICATION = 'TFG.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tfg',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT':'5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'TFG',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#         'PORT':'5432',
+#     }
+# }
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
 
 
 # Password validation
@@ -128,7 +135,17 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'fantasy/assets'),] 
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'fantasy/assets'),
+)
+
+STATICFILES_FINDERS = (
+'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+'django.contrib.staticfiles.finders.FileSystemFinder',
+)
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

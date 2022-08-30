@@ -77,42 +77,94 @@ def inicio(request):
         params['plantilla'] = plantilla.jugadores.all()
         params['favs'] = fav.jugadores.all()
 
-    j = sorted(jugadores,key=lambda t:-t.getPuntosTotales())
+    j = sorted(jugadores,key=lambda t:t.getPuntosTotales(), reverse=True)
     p = Paginator(j,25)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
     params.update({'jugadores':j,'page_obj':page_obj,'jug':jug})
     return render(request,'listado.html',params)
 
-def carga_datos(request):
+@login_required(login_url="/login")
+def carga_jugadores(request):
 
-    jugadores = leer_jugadores('TFG/fantasy/csv/listado2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/porteros2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/defensas2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/medios2122.csv')
-    estadisticas_bbdd('TFG/fantasy/csv/delanteros2122.csv')
+    if request.user.username == 'javierAdmin':
+        leer_jugadores('fantasy/csv/listado2122.csv')
+    return render(request,'404.html')
 
-    nombres,jugados,vals,mins,pts= [],[],[],[],[]
-    for j in jugadores:
-        totales = Stats.getTotalJugador(j.id)
-        stats = Stats.objects.filter(jugador_id=j.id)
-        d = len(stats)
-        nombres.append(j.nombre)
-        jugados.append(d)
-        vals.append(Valores.objects.filter(jugador_id=j.id).aggregate(Sum('valor'))['valor__sum']/d)
-        mins.append(totales['minutos__sum']/d)
-        pts.append(j.getMediaPuntos())
-        
-    dict = {'nombre':nombres,'disputados':jugados,'minutos':mins,'puntos':pts,'valorMedio':vals}
+@login_required(login_url="/login")
+def carga_porteros(request):
 
-    df = pd.DataFrame(data = dict)
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/porteros2122.csv',False,1)
+    return render(request,'404.html')
 
-    neigh = NearestNeighbors(n_neighbors=6)
-    neigh.fit(df.drop(columns=['nombre']))
-    dump(neigh,'fantasy/joblibs/knn/knn.joblib')
+@login_required(login_url="/login")
+def carga_defensas1(request):
 
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/defensas2122.csv',True,1)
+    return render(request,'404.html')
 
-        
+@login_required(login_url="/login")
+def carga_defensas2(request):
+
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/defensas2122.csv',True,2)
+    return render(request,'404.html')
+
+@login_required(login_url="/login")
+def carga_medios1(request):
+
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/medios2122.csv',True,1)
+    return render(request,'404.html')
+
+@login_required(login_url="/login")
+def carga_medios2(request):
+
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/medios2122.csv',True,2)
+    return render(request,'404.html')
+
+@login_required(login_url="/login")
+def carga_delanteros1(request): 
+    
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/delanteros2122.csv',True,1)
+    return render(request,'404.html')
+
+@login_required(login_url="/login")
+def carga_delanteros2(request): 
+    
+    if request.user.username == 'javierAdmin':
+        estadisticas_bbdd('fantasy/csv/delanteros2122.csv',True,2)
+    return render(request,'404.html')
+
+@login_required(login_url="/login")
+def carga_joblib(request): 
+
+    if request.user.username == 'javierAdmin':
+        jugadores = Jugador.objects.all()
+
+        nombres,jugados,vals,mins,pts= [],[],[],[],[]
+        for j in jugadores:
+            totales = Stats.getTotalJugador(j.id)
+            stats = Stats.objects.filter(jugador_id=j.id)
+            d = len(stats)
+            nombres.append(j.nombre)
+            jugados.append(d)
+            vals.append(Valores.objects.filter(jugador_id=j.id).aggregate(Sum('valor'))['valor__sum']/d)
+            mins.append(totales['minutos__sum']/d)
+            pts.append(j.getMediaPuntos())
+            
+        dict = {'nombre':nombres,'disputados':jugados,'minutos':mins,'puntos':pts,'valorMedio':vals}
+
+        df = pd.DataFrame(data = dict)
+
+        neigh = NearestNeighbors(n_neighbors=6)
+        neigh.fit(df.drop(columns=['nombre']))
+        dump(neigh,'fantasy/joblibs/knn/knn.joblib')
+
     return render(request,'listado.html')
 
 def perfil_jugador(request,jugador_id):
