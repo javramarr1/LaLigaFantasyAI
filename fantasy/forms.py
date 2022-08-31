@@ -55,7 +55,7 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError('El correo no debe ser nulo')
     
         if not re.fullmatch(regex, correo):
-            raise forms.ValidationError('Inserte un correo electrónico válido')
+            raise forms.ValidationError('Inserta un correo electrónico válido')
 
         existe_email = User.objects.filter(email=correo).exists()
 
